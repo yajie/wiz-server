@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="/static/images/wiz-icon.png">
+
+        <title>WIZ</title>
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="/static/css/blog.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <style type="text/css">
+            .news-center{
+                border-top:2px solid #ccc;
+                border-bottom:2px solid #ccc;
+                width:100%;
+                height:30px;
+                margin-left:0px;
+                margin-top:10px;
+                box-shadow: rgba(104,113,122,0.2) 0 -1px 2px;
+                -webkit-box-shadow: rgba(104,113,122,0.2) 0 -1px 2px;
+                -moz-box-shadow: rgba(104,113,122,0.2) 0 -1px 2px;
+            }
+
+            .news-title{border-right:2px solid #ccc;height:100%;text-align:center;}
+
+            .head{
+                background: -moz-linear-gradient(center top , #4D80AF 0px, #2B5593 100%) repeat scroll 0% 0% transparent;
+                background: -webkit-linear-gradient(top,#4d80af 0,#2b5593 100%);
+                background: -ms-linear-gradient(top,#4d80af 0,#2b5593 100%);
+            }
+
+            .hidden{display:none;}
+            #newsDiv > div > span{margin-top: 4px;display: block;}
+            body{font-family: Verdana, Arial, Helvetica, sans-serif;font-size:14px;}
+        </style>
+    </head>
+
+<body>
+    <div class="blog-masthead head">
+        <div class="container">
+            <nav class="blog-nav">
+                <a class="blog-nav-item active" type="home" href="#">Home</a>
+                <a class="blog-nav-item" type="about" href="#">About WIZ</a>
+                <a class="blog-nav-item" type="event" href="#">Photo Gallery</a>
+                <a class="blog-nav-item" type="sponsorship" href="#">Sponsorship</a>
+                <a class="blog-nav-item" type="contact" href="#">Contact Us</a>
+            </nav>
+        </div>
+    </div>
+    <div style="margin-top:1px;"></div>
+    <div class="container">
+        <div id="myCarousel" class="carousel slide" style="height:242px;" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators" style="height:242px;">
+                <li data-target="#myCarousel" data-slide-to="0" style="margin-top:250px;" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1" style="margin-top:250px;"></li>
+                <li data-target="#myCarousel" data-slide-to="2" style="margin-top:250px;"></li>
+            </ol>
+            <div class="carousel-inner" style="height:242px;" role="listbox">
+                <div class="item active">
+                    <img class="first-slide" src="/static/images/wiz.jpg" alt="wiz">
+                </div>
+                <div class="item">
+                    <img class="second-slide" src="/static/images/ethonal.jpg" alt="ethonal wiz">
+                </div>
+                <div class="item">
+                    <img class="second-slide" src="/static/images/soya.jpg" alt="soya wiz">
+                </div>
+            </div>
+
+            <a class="left carousel-control" style="height:242px;" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" style="height:242px;" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div><!-- /.carousel -->
+    </div><!-- /.container -->
+
+    <div class="container">
+        <div id="newsDiv" class="row news-center">
+            <div class="col-md-2 news-title">
+                <span style="color:#cc0000;text-indent:-19px;">NEWS CENTER</span>
+            </div>
+            <div class="col-md-10">
+                {% for news_item in all_news %}
+                <span data-index="{{news_item.data_index}}" class="news-item hidden" style="margin-left:200px;">
+                    {{news_item.message}}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <iframe src="/home" frameborder="0" width="100%" height="420px"></iframe>
+
+</body>
+    <script src="/static/js/jquery-1.11.2.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+        $("iframe").height("420px");
+        $(document).ready(function(){
+            /*******************MENU CLICK********************/
+            $(".blog-nav-item").on("click",function(){
+                $(".blog-nav-item").removeClass("active");
+                var _this = $(this);
+                _this.addClass("active");
+                var _type = _this.attr("type");
+                $("iframe").attr("src",_type);
+            });
+
+            /*******************News Center********************/
+            var newsItem = $("[data-index=0]");
+            newsItem.attr("class","news-item show");
+            newsItem.animate({marginLeft:""},1000);
+
+            setInterval(function(){
+                var newsItem = $(".news-item.show");
+
+                newsItem.fadeOut();
+                newsItem.attr("class","news-item hidden");
+                newsItem.attr("style","margin-left:200px;");
+
+                var _index = parseInt(newsItem.attr("data-index"));
+                var newsLen = $(".news-item").length;
+                _index = (_index == (newsLen-1))?0:(_index+1);
+
+                var showItem = $("span[data-index=" + _index + "]");
+                showItem.attr("class","news-item show");
+                showItem.animate({marginLeft:""},1000);
+
+            },8000);
+        });
+    </script>
+</html>

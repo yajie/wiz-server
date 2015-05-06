@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="/static/images/wiz-icon.png">
+
+        <title>WIZ</title>
+        <!-- Bootstrap core CSS -->
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="/static/css/blog.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <style type="text/css">
+            .sider-text{text-align:center;height:40px;line-height:40px;font-size:16px;}
+            .nav  > li:hover {color:#fff;background-color:#666666;cursor:pointer;}
+            .nav  > li.active,
+            .nav  > li:focus {color: #fff;background-color: #428bca;}
+
+            .menu-border{border:1px #eee solid;box-shadow: rgba(104,113,122,0.2) 0 -1px 2px;-webkit-box-shadow: rgba(104,113,122,0.2) 0 -1px 2px;-moz-box-shadow: rgba(104,113,122,0.2) 0 -1px 2px;}
+            .gallery{list-style:none;}
+            .gallery > li {width:30%;height:100%;float:left;margin-right:20px;}
+            .gallery > li > img {width:100%;margin-bottom:20px;}
+        </style>
+    </head>
+
+<body>
+    <div style="height:100%;width:156px;margin-left:204px;margin-top:10px;float:left;">
+        <ul class="nav nav-sidebar menu-border">
+            <li class="sider-text active">2015</li>
+            <li class="sider-text">2014</li>
+            <li class="sider-text">2013</li>
+        </ul>
+    </div>
+
+    <div id="gallery" style="width:776px;float:left;margin-left:10px;margin-top:10px;">
+       <!--
+        <ul class="gallery">
+            <li><img src="/static/images/event/2015/plasticizer_2015.jpg" alt=""/></li>
+            <li><img src="/static/images/event/2015/plasticizer_2015.jpg" alt=""/></li>
+            <li><img src="/static/images/event/2015/plasticizer_2015.jpg" alt=""/></li>
+        </ul>
+        -->
+    </div>
+</body>
+    <script src="/static/js/jquery-1.11.2.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/wiz.js"></script>
+    <script>
+        $(document).ready(function(){
+            /*************Load Event Image****************/
+
+            $(".sider-text").on("click",function(){
+                var _this = $(this);
+                $(".sider-text.active").removeClass("active");
+                _this.addClass("active");
+                var year = _this.text();
+                debugger;
+                $.ajax({
+                    type:"GET",
+                    url:"/event?year=" + year,
+                    success:function (response){
+                        debugger;
+                        var galleryData = new Array();
+                        for(var i=0,len=response.length;i<len;i++){
+                            var item = response[i].fields;
+                            galleryData.push({
+                                "year":parseInt(item.year),
+                                "image":item.image
+                            });
+                        }
+
+                        var eventGallery = new WIZ.EventGallery($("#gallery"),galleryData);
+                    }
+                });
+            });
+
+            $("sider-text active").click();
+
+            var galleryData = new Array();
+            galleryData.push({
+                "year":2015,
+                "image":"plasticizer_2015.jpg"
+            });
+
+
+
+            var eventGallery = new WIZ.EventGallery($("#gallery"),galleryData);
+        });
+    </script>
+</html>

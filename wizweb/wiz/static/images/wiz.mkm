@@ -1,0 +1,8 @@
+<MKM version="2.0" imageFileUrl="file:///D:/coder/pycharmworkspace/wizserver/wizweb/wiz/static/images/wiz.jpg">
+  <Marks>
+    <LengthMark x="2" y="37" color="16711680" length="939" direction="12"/>
+    <LengthMark x="494" y="0" color="16711680" length="263" direction="3"/>
+    <RectMark x="43" y="105" color="16711680" offsetX="246" offsetY="92"/>
+    <TextMark x="564" y="67" color="16711680" offsetX="25" offsetY="10" defaultDirection="9" direction="9" textMaxWidth="100" text="说明..."/>
+  </Marks>
+</MKM>
